@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.sakurai.techcertificationapi.certification.model.AlternativeDto;
@@ -57,7 +59,7 @@ public class CertificationService {
         Certification certification = Certification.builder()
             .technology(submition.getTechnology().toUpperCase())
             .grade(grade(correctedAnswers))
-            .studentId(student.get().getId())
+            .student(student.get())
             .answers(correctedAnswers)
             .build();
 
@@ -113,7 +115,7 @@ public class CertificationService {
             .id(entity.get().getId())
             .technology(entity.get().getTechnology())
             .grade(entity.get().getGrade())
-            .timeOfEmition(entity.get().getCreationTime())
+            .timeOfEmition(entity.get().getCreatedAt())
             .answers(mapAnswers(entity.get().getAnswers()))
             .build();
     }
@@ -132,14 +134,15 @@ public class CertificationService {
 
 
     public List<RankingCertificationDto> getRankingByTech(String technology, int quantity) throws ResourceNotFoundException {
-        List<Certification> certifications = certificationRepository.findGreatestGradesByTechnology(
+        Page<Certification> certificationsPage = certificationRepository.findGreatestGradesByTechnology(
             technology.toUpperCase(),
-            quantity
+            PageRequest.of(0, quantity)
         );
-        if(certifications.isEmpty())
+        List<Certification> certificationsList = certificationsPage.getContent();
+        if(certificationsList.isEmpty())
             throw new ResourceNotFoundException("ranking", technology);
 
-        return certifications.stream()
+        return certificationsList.stream()
             .map(certification -> RankingCertificationDto.builder()
                 .id(certification.getId())
                 .student(
