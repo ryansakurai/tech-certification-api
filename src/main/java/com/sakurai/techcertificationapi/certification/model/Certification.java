@@ -44,7 +44,7 @@ public class Certification {
     @JsonBackReference
     private Student student;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "certification_id")
     private List<Answer> answers;
 

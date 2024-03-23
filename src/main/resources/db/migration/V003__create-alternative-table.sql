@@ -5,5 +5,5 @@ CREATE TABLE alternative (
     question_id uuid NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (question_id) REFERENCES question (id)
+    FOREIGN KEY (question_id) REFERENCES question (id) ON DELETE CASCADE
 );

@@ -6,5 +6,5 @@ CREATE TABLE certification (
     student_id uuid NOT NULL,
 
     PRIMARY KEY (id),
-    FOREIGN KEY (student_id) REFERENCES student(id)
+    FOREIGN KEY (student_id) REFERENCES student(id) ON DELETE CASCADE
 );
