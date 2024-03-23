@@ -25,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "question")
+@Entity
 public class Question {
 
     @Id
@@ -33,15 +33,11 @@ public class Question {
     private UUID id;
 
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private LocalDateTime createdAt;
 
-
-    @Column(length = 50)
     private String technology;
 
-    @Column
     private String description;
-
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "question_id")
