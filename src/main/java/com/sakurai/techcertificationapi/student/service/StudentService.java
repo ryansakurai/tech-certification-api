@@ -32,7 +32,7 @@ public class StudentService {
         try {
             var student = Student.builder()
                     .email(studentDto.getEmail())
-                    .fullName(studentDto.getFullName())
+                    .name(studentDto.getName())
                     .build();
             return studentRepository.save(student);
         }
@@ -49,7 +49,7 @@ public class StudentService {
 
         return GetStudentDto.builder()
                             .email(student.get().getEmail())
-                            .fullName(student.get().getFullName())
+                            .name(student.get().getName())
                             .certifications(parseCertifications(student.get().getCertifications()))
                             .build();
     }

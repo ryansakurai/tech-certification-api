@@ -20,6 +20,11 @@ import com.sakurai.techcertificationapi.exception.ErrorDtoWrapper;
 import com.sakurai.techcertificationapi.exception.InvalidKeyException;
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;
 
+/* TODO: switch from setter DI to contructor DI */
+/* TODO: see if it's best to return created resource */
+/* TODO: cover invalid body errors too */
+/* TODO: maybe switch to UTC */
+
 
 @RestController
 @RequestMapping("/certifications")
@@ -29,7 +34,7 @@ public class CertificationController {
     private CertificationService certificationService;
 
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Object> submitAnswers(@RequestBody SubmitionDto submition, UriComponentsBuilder ucb) {
         try {
             Certification certification = this.certificationService.submitAnswers(submition);

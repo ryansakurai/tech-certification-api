@@ -9,7 +9,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.sakurai.techcertificationapi.certification.model.Certification;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,7 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@Entity(name = "student")
+@Entity
 public class Student {
 
     @Id
@@ -34,15 +33,11 @@ public class Student {
     private UUID id;
 
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private LocalDateTime createdAt;
 
-
-    @Column(unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private String fullName;
-
+    private String name;
 
     @OneToMany(mappedBy = "student")
     @JsonManagedReference

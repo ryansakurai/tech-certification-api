@@ -144,7 +144,7 @@ public class CertificationService {
                 .id(certification.getId())
                 .student(
                     RankingStudentDto.builder()
-                    .name(certification.getStudent().getFullName())
+                    .name(certification.getStudent().getName())
                     .email(certification.getStudent().getEmail())
                     .build()
                 ).grade(certification.getGrade())

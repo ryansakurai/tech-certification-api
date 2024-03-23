@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class GetStudentDto {
 
     private String email;
-    private String fullName;
+    private String name;
     private List<GetStudentCertificationDto> certifications;
 
 }

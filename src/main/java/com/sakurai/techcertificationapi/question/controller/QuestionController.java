@@ -28,7 +28,7 @@ public class QuestionController {
     private QuestionService questionService;
 
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Object> registerQuestion(@RequestBody RegistrationQuestionDto question,
                                                    UriComponentsBuilder ucb) {
         Question registeredQuestion = this.questionService.registerQuestion(question);
