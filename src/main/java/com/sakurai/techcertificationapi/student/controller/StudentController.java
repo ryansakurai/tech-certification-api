@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,12 +16,12 @@ import com.sakurai.techcertificationapi.exception.EmailAlreadyInUseException;
 import com.sakurai.techcertificationapi.exception.ErrorDtoWrapper;
 import com.sakurai.techcertificationapi.exception.InvalidKeyException;
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;
-import com.sakurai.techcertificationapi.student.model.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.StudentEmailUpdateDto;
+import com.sakurai.techcertificationapi.student.dto.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.model.Student;
-import com.sakurai.techcertificationapi.student.model.StudentEmailUpdateDto;
-import com.sakurai.techcertificationapi.student.model.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.service.StudentService;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -34,8 +35,9 @@ public class StudentController {
 
 
     @PostMapping()
-    public ResponseEntity<Object> registerStudent(@RequestBody StudentRegistrationDto student,
+    public ResponseEntity<Object> registerStudent(@Valid @RequestBody StudentRegistrationDto student,
                                                   UriComponentsBuilder ucb) {
+        /* TODO: add validation to the rest of the endpoints and return my messages */
         try {
             this.service.registerStudent(student);
             URI uri = ucb
@@ -82,6 +84,13 @@ public class StudentController {
         catch(EmailAlreadyInUseException e) {
             return ResponseEntity.status(409).body( new ErrorDtoWrapper("emailAlreadyInUse", e.getMessage()) );
         }
+    }
+
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDtoWrapper> handleException(Exception e) {
+        /* TODO: create exception handlers */
+        return ResponseEntity.status(500).body(new ErrorDtoWrapper("internalError", "Something went wrong."));
     }
 
 }
