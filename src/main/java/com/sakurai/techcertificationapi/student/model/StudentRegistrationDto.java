@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 public class StudentRegistrationDto {
 
     private String email;
-    private String name;
+    private String fullName;
 
 }

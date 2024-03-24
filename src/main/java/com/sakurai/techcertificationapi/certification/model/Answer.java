@@ -3,6 +3,9 @@ package com.sakurai.techcertificationapi.certification.model;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.sakurai.techcertificationapi.question.model.Alternative;
+import com.sakurai.techcertificationapi.question.model.Question;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -15,10 +18,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import com.sakurai.techcertificationapi.question.model.Alternative;
-import com.sakurai.techcertificationapi.question.model.Question;
-
 
 @Data
 @AllArgsConstructor

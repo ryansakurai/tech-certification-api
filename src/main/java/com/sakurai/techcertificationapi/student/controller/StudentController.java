@@ -33,7 +33,7 @@ public class StudentController {
     private StudentService service;
 
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<Object> registerStudent(@RequestBody StudentRegistrationDto student,
                                                   UriComponentsBuilder ucb) {
         try {
@@ -67,8 +67,6 @@ public class StudentController {
     public ResponseEntity<Object> updateStudentEmail(@PathVariable String studentEmail,
                                                      @RequestBody StudentEmailUpdateDto newEmail,
                                                      UriComponentsBuilder ucb) {
-
-        /* TODO: moved permanently? */
         try {
             Student updatedStudent = this.service.updateStudentEmail(studentEmail, newEmail);
             URI uri = ucb

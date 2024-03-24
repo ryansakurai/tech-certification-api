@@ -6,8 +6,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import com.sakurai.techcertificationapi.certification.model.AlternativeDto;
@@ -59,7 +57,7 @@ public class CertificationService {
         Certification certification = Certification.builder()
             .technology(submition.getTechnology().toUpperCase())
             .grade(grade(correctedAnswers))
-            .student(student.get())
+            .studentId(student.get().getId())
             .answers(correctedAnswers)
             .build();
 
@@ -115,7 +113,7 @@ public class CertificationService {
             .id(entity.get().getId())
             .technology(entity.get().getTechnology())
             .grade(entity.get().getGrade())
-            .timeOfEmition(entity.get().getCreatedAt())
+            .timeOfEmition(entity.get().getCreationTime())
             .answers(mapAnswers(entity.get().getAnswers()))
             .build();
     }
@@ -134,20 +132,19 @@ public class CertificationService {
 
 
     public List<RankingCertificationDto> getRankingByTech(String technology, int quantity) throws ResourceNotFoundException {
-        Page<Certification> certificationsPage = certificationRepository.findGreatestGradesByTechnology(
+        List<Certification> certifications = certificationRepository.findGreatestGradesByTechnology(
             technology.toUpperCase(),
-            PageRequest.of(0, quantity)
+            quantity
         );
-        List<Certification> certificationsList = certificationsPage.getContent();
-        if(certificationsList.isEmpty())
+        if(certifications.isEmpty())
             throw new ResourceNotFoundException("ranking", technology);
 
-        return certificationsList.stream()
+        return certifications.stream()
             .map(certification -> RankingCertificationDto.builder()
                 .id(certification.getId())
                 .student(
                     RankingStudentDto.builder()
-                    .name(certification.getStudent().getName())
+                    .name(certification.getStudent().getFullName())
                     .email(certification.getStudent().getEmail())
                     .build()
                 ).grade(certification.getGrade())
