@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,13 +83,6 @@ public class StudentController {
         catch(EmailAlreadyInUseException e) {
             return ResponseEntity.status(409).body( new ErrorDtoWrapper("emailAlreadyInUse", e.getMessage()) );
         }
-    }
-
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorDtoWrapper> handleException(Exception e) {
-        /* TODO: create exception handlers */
-        return ResponseEntity.status(500).body(new ErrorDtoWrapper("internalError", "Something went wrong."));
     }
 
 }
