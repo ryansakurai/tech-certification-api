@@ -1,6 +1,6 @@
 package com.sakurai.techcertificationapi.certification.model;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,13 +30,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @Entity(name = "certification")
 public class Certification {
+    // TODO: change all creation times to OffsetDateTime
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @CreationTimestamp
-    private LocalDateTime creationTime;
+    private OffsetDateTime creationTime;
 
 
     @Column(length = 50)

@@ -15,12 +15,12 @@ import com.sakurai.techcertificationapi.exception.EmailAlreadyInUseException;
 import com.sakurai.techcertificationapi.exception.ErrorDtoWrapper;
 import com.sakurai.techcertificationapi.exception.InvalidKeyException;
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;
-import com.sakurai.techcertificationapi.student.model.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.StudentEmailUpdateDto;
+import com.sakurai.techcertificationapi.student.dto.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.model.Student;
-import com.sakurai.techcertificationapi.student.model.StudentEmailUpdateDto;
-import com.sakurai.techcertificationapi.student.model.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.service.StudentService;
-
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
@@ -34,8 +34,9 @@ public class StudentController {
 
 
     @PostMapping()
-    public ResponseEntity<Object> registerStudent(@RequestBody StudentRegistrationDto student,
+    public ResponseEntity<Object> registerStudent(@Valid @RequestBody StudentRegistrationDto student,
                                                   UriComponentsBuilder ucb) {
+        /* TODO: add validation to the rest of the endpoints and return my messages */
         try {
             this.service.registerStudent(student);
             URI uri = ucb

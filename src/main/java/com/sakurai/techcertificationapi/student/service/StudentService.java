@@ -7,16 +7,16 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import com.sakurai.techcertificationapi.certification.model.Certification;
 import com.sakurai.techcertificationapi.exception.EmailAlreadyInUseException;
 import com.sakurai.techcertificationapi.exception.InvalidKeyException;
 import com.sakurai.techcertificationapi.exception.ResourceNotFoundException;
-import com.sakurai.techcertificationapi.student.model.GetStudentCertificationDto;
-import com.sakurai.techcertificationapi.student.model.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.GetStudentCertificationDto;
+import com.sakurai.techcertificationapi.student.dto.GetStudentDto;
+import com.sakurai.techcertificationapi.student.dto.StudentEmailUpdateDto;
+import com.sakurai.techcertificationapi.student.dto.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.model.Student;
-import com.sakurai.techcertificationapi.student.model.StudentEmailUpdateDto;
-import com.sakurai.techcertificationapi.student.model.StudentRegistrationDto;
 import com.sakurai.techcertificationapi.student.repository.StudentRepository;
 
 
@@ -27,8 +27,9 @@ public class StudentService {
     private StudentRepository studentRepository;
 
 
+    @Transactional
     public Student registerStudent(StudentRegistrationDto studentDto) {
-        /* TODO: email validation */
+        /* TODO: put transactional in other operations with side effects */
         try {
             var student = Student.builder()
                     .email(studentDto.getEmail())
