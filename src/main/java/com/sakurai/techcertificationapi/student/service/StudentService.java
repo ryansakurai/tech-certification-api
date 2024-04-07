@@ -28,7 +28,6 @@ public class StudentService {
 
 
     public Student registerStudent(StudentRegistrationDto studentDto) {
-        /* TODO: email validation */
         try {
             var student = Student.builder()
                     .email(studentDto.getEmail())
